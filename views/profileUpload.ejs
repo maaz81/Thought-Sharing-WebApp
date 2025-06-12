@@ -1,20 +1,91 @@
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Upload Profile Picture</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .file-upload {
+            display: none;
+        }
+        .file-upload-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            border: 2px dashed #c7d2fe;
+            border-radius: 0.5rem;
+            background-color: #f8fafc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .file-upload-label:hover {
+            border-color: #818cf8;
+            background-color: #f0f4ff;
+        }
+    </style>
 </head>
 
-<body>
+<body class="bg-gradient-to-br from-indigo-50 to-purple-50 min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <!-- Gradient Header -->
+            <div class="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-center">
+                <h3 class="text-xl font-semibold text-white">Upload Profile Picture</h3>
+                <p class="text-indigo-100 mt-1">Choose a photo to represent you</p>
+            </div>
+            
+            <!-- Upload Form -->
+            <form action="/upload/profile" method="post" enctype="multipart/form-data" class="p-6">
+                <!-- File Upload Area -->
+                <label for="profile-upload" class="file-upload-label mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-indigo-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span class="text-gray-600 font-medium">Click to browse files</span>
+                    <span class="text-sm text-gray-400 mt-1">or drag and drop</span>
+                    <span class="text-xs text-gray-400 mt-2">JPG, PNG up to 5MB</span>
+                    <input type="file" id="profile-upload" name="profile" accept="image/*" class="file-upload" required>
+                </label>
+                
+                <!-- Preview Container (hidden by default) -->
+                <div id="image-preview" class="hidden mb-4 text-center">
+                    <img id="preview-image" src="#" alt="Preview" class="max-h-48 mx-auto rounded-lg">
+                </div>
+                
+                <!-- Submit Button -->
+                <div class="flex justify-end">
+                    <button type="submit" 
+                        class="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-6 py-2 rounded-lg font-medium shadow-md hover:shadow-lg transition duration-200">
+                        Upload Picture
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-    <h3>Upload your profile pic</h3>
-
-    <form action="/upload/profile" method="post" enctype="multipart/form-data">
-        <input type="file" name="profile" />
-        <input type="submit" value="Upload">
-    </form>
-
+    <script>
+        // Image preview functionality
+        document.getElementById('profile-upload').addEventListener('change', function(e) {
+            const previewContainer = document.getElementById('image-preview');
+            const previewImage = document.getElementById('preview-image');
+            
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewContainer.classList.remove('hidden');
+                }
+                
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+    </script>
 </body>
-
 </html>
