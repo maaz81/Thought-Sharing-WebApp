@@ -24,5 +24,5 @@ A modern social media application built with Node.js, Express, and MongoDB. Conn
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/social-app.git
-   cd social-app
+   git clone [(https://github.com/maaz81/Thought-Sharing-WebApp)]
+   
